@@ -66,3 +66,11 @@ def env_check():
         "SUPABASE_URL_set": bool(SUPABASE_URL),
         "SUPABASE_ANON_KEY_set": bool(SUPABASE_ANON_KEY),
     }
+@app.get("/api/v1/status")
+def api_status():
+    return {
+        "service": "ai-market-intelligence-copilot",
+        "version": "v1",
+        "status": "ready"
+    }
+
