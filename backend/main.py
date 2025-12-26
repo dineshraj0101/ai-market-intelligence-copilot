@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI
 from supabase import create_client, Client
 from routers.status import router as status_router
+from routers.stocks import router as stocks_router
 
 app = FastAPI()
 
@@ -71,3 +72,4 @@ def env_check():
 
 # Include API routers
 app.include_router(status_router)
+app.include_router(stocks_router)
