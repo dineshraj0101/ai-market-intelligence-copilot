@@ -59,3 +59,10 @@ def supabase_ping():
             "message": "Supabase ping failed",
             "error": str(e)
         }
+
+@app.get("/env-check")
+def env_check():
+    return {
+        "SUPABASE_URL_set": bool(SUPABASE_URL),
+        "SUPABASE_ANON_KEY_set": bool(SUPABASE_ANON_KEY),
+    }
