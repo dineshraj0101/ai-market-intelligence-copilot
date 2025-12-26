@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from supabase import create_client, Client
+from routers.status import router as status_router
 
 app = FastAPI()
 
@@ -47,7 +48,6 @@ def supabase_ping():
         }
 
     try:
-        # This validates API key + connectivity (no tables needed)
         supabase.auth.get_user()
         return {
             "ok": True,
@@ -60,17 +60,14 @@ def supabase_ping():
             "error": str(e)
         }
 
+
 @app.get("/env-check")
 def env_check():
     return {
         "SUPABASE_URL_set": bool(SUPABASE_URL),
         "SUPABASE_ANON_KEY_set": bool(SUPABASE_ANON_KEY),
     }
-@app.get("/api/v1/status")
-def api_status():
-    return {
-        "service": "ai-market-intelligence-copilot",
-        "version": "v1",
-        "status": "ready"
-    }
 
+
+# Include API routers
+app.include_router(status_router)
