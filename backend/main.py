@@ -36,3 +36,26 @@ def supabase_check():
         "ok": True,
         "message": "Supabase client initialized"
     }
+
+
+@app.get("/supabase-ping")
+def supabase_ping():
+    if supabase is None:
+        return {
+            "ok": False,
+            "message": "Supabase client not initialized"
+        }
+
+    try:
+        # This validates API key + connectivity (no tables needed)
+        supabase.auth.get_user()
+        return {
+            "ok": True,
+            "message": "Supabase reachable (auth endpoint ok)"
+        }
+    except Exception as e:
+        return {
+            "ok": False,
+            "message": "Supabase ping failed",
+            "error": str(e)
+        }
